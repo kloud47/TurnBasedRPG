@@ -16,12 +16,12 @@ public class GridSystem : MonoBehaviour
     Dictionary<Vector2Int, GridStats> grid = new Dictionary<Vector2Int, GridStats>();
     public Dictionary<Vector2Int, GridStats> Grid { get { return grid; } }
 
-    private void Start()
+    private void Awake()
     {
-        if (gridState != null) {
-            gridstates = gridState.gridStates;
-            // Use the data
-        }
+        // if (gridState != null) {
+        //     gridstates = gridState.gridStates;
+        //     // Use the data
+        // }
         CreateGrid();
     }
     
