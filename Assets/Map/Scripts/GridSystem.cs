@@ -5,14 +5,23 @@ using UnityEngine;
 public class GridSystem : MonoBehaviour
 {
     [SerializeField] Vector2Int gridSize;
+    
+    public GridStateData gridState;
+    bool [,] gridstates = new bool[10,10];
+    
+    
     [SerializeField] int unitGridSize;
     public int GetGridSize { get { return unitGridSize; } }
 
     Dictionary<Vector2Int, GridStats> grid = new Dictionary<Vector2Int, GridStats>();
     public Dictionary<Vector2Int, GridStats> Grid { get { return grid; } }
 
-    private void Awake()
+    private void Start()
     {
+        if (gridState != null) {
+            gridstates = gridState.gridStates;
+            // Use the data
+        }
         CreateGrid();
     }
     
@@ -30,7 +39,17 @@ public class GridSystem : MonoBehaviour
     {
         if (grid.ContainsKey(coordinates))
         {
+            Debug.Log($"Blocking grid {coordinates}");
             grid[coordinates].traversable = false;
+        }
+    }
+
+    public void UnBlockGrid(Vector2Int coordinates)
+    {
+        if (grid.ContainsKey(coordinates))
+        {
+            Debug.Log($"Unblocking grid {coordinates}");
+            grid[coordinates].traversable = true;
         }
     }
 
@@ -44,6 +63,7 @@ public class GridSystem : MonoBehaviour
         }
     }
 
+    // This function converts Postion data into Grid coordinates:
     public Vector2Int GetCoordinatesFromPosition(Vector3 position)
     {
         Vector2Int coordinates = new Vector2Int();

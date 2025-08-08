@@ -59,7 +59,7 @@ public class PathFinding : MonoBehaviour
             ExploreNeighbors();
             if (currentNode.cordData == TargetPos)
             {
-                isRunning = false;
+                isRunning = false; // dont move here moving:
                 currentNode.traversable = false;
             }
         }
@@ -109,12 +109,12 @@ public class PathFinding : MonoBehaviour
         return path;
     }
     
-    public void NotifyReceievers()
+    public void NotifyRecalculatePath()
     {
         BroadcastMessage("RecalculatePath", false, SendMessageOptions.DontRequireReceiver);
     }
 
-    public void SetNewDestination(Vector2Int startCoordinates, Vector2Int targetCoordinates)
+    public void SetNewTarget(Vector2Int startCoordinates, Vector2Int targetCoordinates)
     {
         startPos = startCoordinates;
         targetPos = targetCoordinates;
