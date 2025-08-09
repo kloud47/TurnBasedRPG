@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] float movementSpeed = 2f;
+    [SerializeField] float movementSpeed = 10f;
     Transform selectedUnitTransform;
     GameObject selectedUnit;
     bool unitSelected = false;
@@ -29,7 +30,9 @@ public class PlayerController : MonoBehaviour
         // {
         //     Debug.Log(data.Key.ToString());
         // }
-        
+        gridSystem.gridState.PlayerPos =
+            new Vector2Int(0, 0) /
+            gridSystem.GetGridSize;
         SetCords(selectedUnitTransform);
     }
     
@@ -53,12 +56,17 @@ public class PlayerController : MonoBehaviour
             {
                 if(hit.transform.tag == "Tile")
                 {
+                    Tile tile = hit.transform.GetComponent<Tile>();
+                    if (tile) // Tile ->
+                    {
+                        
+                    }
                     Debug.Log("Hit happened Tile");
                     if(unitSelected)
                     {
                         Vector2Int targetCords = hit.transform.GetComponent<Tile>().cords;
                         // Divide coordinates by GirdSize to get the correct Coordinate:
-                        Vector2Int startCords = new Vector2Int((int) selectedUnitTransform.position.x, (int) selectedUnitTransform.position.y) / gridSystem.GetGridSize;
+                        Vector2Int startCords = new Vector2Int((int) selectedUnitTransform.position.x, (int) selectedUnitTransform.position.z) / gridSystem.GetGridSize;
                         PathFinder.SetNewTarget(startCords, targetCords);// This gets the coordinates to the destination which can then be used to perform the running animation:
                         RecalculatePath(true);
                     }
@@ -109,18 +117,29 @@ public class PlayerController : MonoBehaviour
             inputEnabled = false;
             Vector3 startPosition = selectedUnitTransform.position;
             Vector3 endPosition = gridSystem.GetPositionFromCoordinates(path[i].cordData);
-            float travelPercent = 0f;
+            float distance = Vector3.Distance(startPosition, endPosition);
+            float duration = distance / movementSpeed;
+            float elapsedTime = 0f;
 
+            // Face movement direction
             selectedUnitTransform.LookAt(endPosition);
 
-            while (travelPercent < 1f)
+            // Smooth movement between points
+            while (elapsedTime < duration)
             {
-                travelPercent += Time.deltaTime * movementSpeed;
-                selectedUnitTransform.position = Vector3.Lerp(startPosition, endPosition, travelPercent);
-                yield return new WaitForEndOfFrame();
+                elapsedTime += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsedTime / duration); // value used for Interpolation:
+                selectedUnitTransform.position = Vector3.Lerp(startPosition, endPosition, t);
+                yield return null; // Wait for next frame
             }
-
+            
+            // Ensure exact position at end
+            selectedUnitTransform.position = endPosition;
         }
+
+        gridSystem.gridState.PlayerPos =
+            new Vector2Int((int)selectedUnitTransform.position.x, (int)selectedUnitTransform.position.z) /
+            gridSystem.GetGridSize;
         inputEnabled = true;
     }
     

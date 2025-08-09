@@ -3,29 +3,21 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
-    [SerializeField] bool blocked;
+    [SerializeField] public bool blocked;
     public Vector2Int cords;
     GridSystem gridManager;
     
     // Visual representation:
     private GameObject sphereIndicator;
-    private const float sphereOffset = 1f;
+    private const float sphereOffset = 0f;
     private const float sphereRadius = 0.4f;
     
     private static Material redMaterial;
-    
-    // Material Data:
-    public Material TileMat;
-    public Material TileMat_Overlay;
-    private Renderer tileRenderer;
 
     void Start()
     {
         SetCords();
         VisualUpdate();
-        
-        tileRenderer = gameObject.GetComponent<Renderer>();
-        
         if(blocked)
         {
             gridManager.BlockGrid(cords);
@@ -40,16 +32,6 @@ public class Tile : MonoBehaviour
         int z = (int)transform.position.z;
 
         cords = new Vector2Int(x / gridManager.GetGridSize, z / gridManager.GetGridSize);
-    }
-
-    private void OnMouseEnter()
-    {
-        tileRenderer.material = TileMat_Overlay;
-    }
-
-    private void OnMouseExit()
-    {
-        tileRenderer.material = TileMat;
     }
 
     private void VisualUpdate()

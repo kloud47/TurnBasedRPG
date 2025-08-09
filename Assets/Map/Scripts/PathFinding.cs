@@ -60,7 +60,7 @@ public class PathFinding : MonoBehaviour
             if (currentNode.cordData == TargetPos)
             {
                 isRunning = false; // dont move here moving:
-                currentNode.traversable = false;
+                currentNode.traversable = false;// important so that two player units dont stand on eachother:
             }
         }
     }
@@ -108,11 +108,6 @@ public class PathFinding : MonoBehaviour
         path.Reverse();
         return path;
     }
-    
-    // public void NotifyRecalculatePath()
-    // {
-    //     BroadcastMessage("RecalculatePath", false, SendMessageOptions.DontRequireReceiver);
-    // }
 
     public void SetNewTarget(Vector2Int startCoordinates, Vector2Int targetCoordinates)
     {
@@ -120,6 +115,6 @@ public class PathFinding : MonoBehaviour
         targetPos = targetCoordinates;
         startNode = grid[this.startPos];
         targetNode = grid[this.TargetPos];
-        GetNewPath(StartPos);
+        GetNewPath(startPos);
     }
 }

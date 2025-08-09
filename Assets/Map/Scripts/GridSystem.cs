@@ -35,7 +35,7 @@ public class GridSystem : MonoBehaviour
     {
         if (Grid.ContainsKey(coordinates))
         {
-            Debug.Log($"Blocking grid {coordinates}");
+            // Debug.Log($"Blocking grid {coordinates}");
             Grid[coordinates].traversable = false;
         }
     }
@@ -44,7 +44,7 @@ public class GridSystem : MonoBehaviour
     {
         if (Grid.ContainsKey(coordinates))
         {
-            Debug.Log($"Unblocking grid {coordinates}");
+            // Debug.Log($"Unblocking grid {coordinates}");
             Grid[coordinates].traversable = true;
         }
     }
