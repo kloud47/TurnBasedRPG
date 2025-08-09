@@ -109,10 +109,10 @@ public class PathFinding : MonoBehaviour
         return path;
     }
     
-    public void NotifyRecalculatePath()
-    {
-        BroadcastMessage("RecalculatePath", false, SendMessageOptions.DontRequireReceiver);
-    }
+    // public void NotifyRecalculatePath()
+    // {
+    //     BroadcastMessage("RecalculatePath", false, SendMessageOptions.DontRequireReceiver);
+    // }
 
     public void SetNewTarget(Vector2Int startCoordinates, Vector2Int targetCoordinates)
     {

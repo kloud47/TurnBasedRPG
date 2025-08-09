@@ -1,15 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] float movementSpeed = 2f;
     Transform selectedUnitTransform;
+    GameObject selectedUnit;
     bool unitSelected = false;
     private bool inputEnabled = true;
+    public Vector2Int cords;
     
-    List<GridStats> path = new List<GridStats>(); // This Stores the Path coords needed for Traversal:
+    // UI Elements:
+    public TMP_Text Coordinates;
+    public TMP_Text UnitName;
+    
+    List<GridStats> path = new List<GridStats>(); // This Stores the Path cords needed for Traversal:
     
     GridSystem gridSystem;
     PathFinding PathFinder;
@@ -18,14 +25,23 @@ public class PlayerController : MonoBehaviour
         gridSystem = FindFirstObjectByType<GridSystem>();
         PathFinder = FindFirstObjectByType<PathFinding>();
         
-        foreach (KeyValuePair<Vector2Int, GridStats> data in gridSystem.Grid)
-        {
-            Debug.Log(data.Key.ToString());
-        }
+        // foreach (KeyValuePair<Vector2Int, GridStats> data in gridSystem.Grid)
+        // {
+        //     Debug.Log(data.Key.ToString());
+        // }
+        
+        SetCords(selectedUnitTransform);
     }
     
     void Update()
     {
+        // Updating coordinates for UI:
+        if (selectedUnitTransform != null)
+        {
+            SetCords(selectedUnitTransform);
+        }
+        
+        // On Mouse selection:
         if (Input.GetMouseButtonDown(0) && inputEnabled)
         {
             // performing RayCast from mouse position:
@@ -51,9 +67,16 @@ public class PlayerController : MonoBehaviour
                 {
                     Debug.Log("Hit happened Unit");
                     selectedUnitTransform = hit.transform;
+                    selectedUnit = hit.transform.gameObject;
                     unitSelected = !unitSelected;
                 }
             }
+        }
+
+        if (selectedUnit != null)
+        {
+            Coordinates.text = cords.x + ":" + cords.y;
+            UnitName.text = selectedUnit.name;
         }
     }
 
@@ -99,5 +122,13 @@ public class PlayerController : MonoBehaviour
 
         }
         inputEnabled = true;
+    }
+    
+    private void SetCords(Transform Obj)
+    {
+        int x = (int)Obj.position.x;
+        int z = (int)Obj.position.z;
+
+        cords = new Vector2Int(x / gridSystem.GetGridSize, z / gridSystem.GetGridSize);
     }
 }

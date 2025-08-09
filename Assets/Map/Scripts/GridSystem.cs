@@ -1,35 +1,31 @@
+using System;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class GridSystem : MonoBehaviour
 {
-    [SerializeField] Vector2Int gridSize;
+    [SerializeField] public Vector2Int gridSize;
     
     public GridStateData gridState;
-    bool [,] gridstates = new bool[10,10];
     
     
     [SerializeField] int unitGridSize;
     public int GetGridSize { get { return unitGridSize; } }
 
-    Dictionary<Vector2Int, GridStats> grid = new Dictionary<Vector2Int, GridStats>();
-    public Dictionary<Vector2Int, GridStats> Grid { get { return grid; } }
+    // Dictionary<Vector2Int, GridStats> grid = new Dictionary<Vector2Int, GridStats>();
+    public Dictionary<Vector2Int, GridStats> Grid { get { return gridState.grid; } }
 
     private void Awake()
     {
-        // if (gridState != null) {
-        //     gridstates = gridState.gridStates;
-        //     // Use the data
-        // }
         CreateGrid();
     }
     
     public GridStats GridCoords(Vector2Int coordinates)
     {
-        if (grid.ContainsKey(coordinates))
+        if (Grid.ContainsKey(coordinates))
         {
-            return grid[coordinates];
+            return Grid[coordinates];
         }
 
         return null;
@@ -37,25 +33,25 @@ public class GridSystem : MonoBehaviour
 
     public void BlockGrid(Vector2Int coordinates)
     {
-        if (grid.ContainsKey(coordinates))
+        if (Grid.ContainsKey(coordinates))
         {
             Debug.Log($"Blocking grid {coordinates}");
-            grid[coordinates].traversable = false;
+            Grid[coordinates].traversable = false;
         }
     }
 
     public void UnBlockGrid(Vector2Int coordinates)
     {
-        if (grid.ContainsKey(coordinates))
+        if (Grid.ContainsKey(coordinates))
         {
             Debug.Log($"Unblocking grid {coordinates}");
-            grid[coordinates].traversable = true;
+            Grid[coordinates].traversable = true;
         }
     }
 
     public void ResetGrid()
     {
-        foreach (KeyValuePair<Vector2Int, GridStats> entry in grid)
+        foreach (KeyValuePair<Vector2Int, GridStats> entry in Grid)
         {
             entry.Value.next = null;
             entry.Value.visited = false;
@@ -83,20 +79,22 @@ public class GridSystem : MonoBehaviour
 
         return position;
     }
-    
+
     private void CreateGrid()
     {
+        Grid.Clear();
         for (int x = 0; x < gridSize.x; x++)
         {
             for (int y = 0; y < gridSize.y; y++)
             {
                 Vector2Int cords = new Vector2Int(x, y);
-                grid.Add(cords, new GridStats(cords, true));
+                // grid.Add(cords, new GridStats(cords, !gridstates[x,y]));
+                Grid.Add(cords, new GridStats(cords, true));
 
-                //GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                //Vector3 position = new Vector3(cords.x * unitGridSize, 0f, cords.y * unitGridSize);
-                //cube.transform.position = position;
-                //cube.transform.SetParent(transform);
+                // GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                // Vector3 position = new Vector3(cords.x * unitGridSize, 0f, cords.y * unitGridSize);
+                // cube.transform.position = position;
+                // cube.transform.SetParent(transform);
             }
         }
     }

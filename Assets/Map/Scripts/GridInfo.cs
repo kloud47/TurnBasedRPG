@@ -14,16 +14,15 @@ public class GridInfo : MonoBehaviour
     {
         gridSystem = FindFirstObjectByType<GridSystem>();
         label = GetComponentInChildren<TextMeshPro>();
-        label.GameObject().SetActive(false);
+        label.gameObject.SetActive(false);
         
         DisplayCoords();
     }
 
     private void OnMouseEnter()
     {
-        Debug.Log("Mouse entered: " + cords.ToString());
+        // Debug.Log("Mouse entered: " + cords.ToString());
         label.gameObject.SetActive(true);
-        // DisplayCoords();
     }
 
     private void OnMouseExit()

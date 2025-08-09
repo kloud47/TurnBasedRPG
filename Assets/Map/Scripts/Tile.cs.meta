@@ -1,2 +1,13 @@
 fileFormatVersion: 2
 guid: 7dafbeeed81471d47bf8a602e80a3528
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - TileMat: {fileID: 2100000, guid: c1ad88451ef228c4eac874f258f7567a, type: 2}
+  - TileMat_Overlay: {fileID: 2100000, guid: 485390ee4d0e26547a0aeb9dd650129c, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

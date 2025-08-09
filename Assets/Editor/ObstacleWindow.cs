@@ -6,10 +6,10 @@ using UnityEngine.UIElements;
 
 public class ObstacleWindow : EditorWindow
 {
-    private const int GridSize = 10;
-    public GridStateData gridState;
-    public bool[,] gridStates = new bool[GridSize, GridSize];
+    public bool[,] states;
     private GridSystem gridSystem;
+    // public GridStateData gridState;
+    private int GridSize;
 
     [MenuItem("My Tools/UI Toolkit/ObstacleWindow")]
     public static void ShowWindow()
@@ -21,11 +21,13 @@ public class ObstacleWindow : EditorWindow
 
     private void Initialize()
     {
-        // gridSystem = FindFirstObjectByType<GridSystem>();
-        if (gridState == null) {
-            gridState = ScriptableObject.CreateInstance<GridStateData>();
-        }
-        gridStates = gridState.gridStates;
+        gridSystem = FindFirstObjectByType<GridSystem>();
+        GridSize = gridSystem.gridSize.x;
+        states = new bool[GridSize, GridSize]; 
+        // if (gridState == null) {
+        //     gridState = ScriptableObject.CreateInstance<GridStateData>();
+        // }
+        // gridStates = gridState.gridStates;
         // for (int row = 0; row < GridSize; row++)
         // {
         //     for (int col = 0; col < GridSize; col++)
@@ -66,8 +68,10 @@ public class ObstacleWindow : EditorWindow
     
         button.clicked += () => 
         {
-            gridStates[row, col] = !gridStates[row, col];
-            UpdateButtonAppearance(button, gridStates[row, col]);
+            states[row, col] = !states[row, col];
+            Vector2Int cords = new Vector2Int(row, col);
+            gridSystem.gridState.grid[cords].traversable = states[row, col];
+            UpdateButtonAppearance(button, states[row, col]);
         };
     
         Btn.Add(button);
