@@ -17,7 +17,7 @@ public class Tile : MonoBehaviour
     void Start()
     {
         SetCords();
-        VisualUpdate();
+        VisualUpdate();// generate red sphere if the blocked == true:
         if(blocked)
         {
             gridManager.BlockGrid(cords);

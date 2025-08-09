@@ -53,13 +53,9 @@ public class PlayerController : MonoBehaviour
             
             if(hasHit)
             {
+                // Check for hits -> Tile or Unit:
                 if(hit.transform.tag == "Tile")
                 {
-                    Tile tile = hit.transform.GetComponent<Tile>();
-                    if (tile) // Tile ->
-                    {
-                        
-                    }
                     Debug.Log("Hit happened Tile");
                     if(unitSelected)
                     {

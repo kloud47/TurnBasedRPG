@@ -100,6 +100,7 @@ public class ObstacleWindow : EditorWindow
             // Update ScriptableObject data
             if (gridState.grid.ContainsKey(coord))
             {
+                // This is the main code for the Obstacle generate Functionality:
                 gridState.grid[coord].traversable = !states[row, col];
                 EditorUtility.SetDirty(gridState); // Mark as changed
             }

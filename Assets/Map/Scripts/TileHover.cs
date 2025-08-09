@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+///  Not working right now for future reference or uses:
+/// </summary>
 public class TileHover : MonoBehaviour
 {
     // Material Data:
