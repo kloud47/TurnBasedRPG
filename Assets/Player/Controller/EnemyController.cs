@@ -69,7 +69,7 @@ public class EnemyController : MonoBehaviour
                 transform.position = Vector3.Lerp(startPosition, endPosition, travelPercent);
                 yield return new WaitForEndOfFrame();
             }
-
         }
+        gridSystem.BlockGrid(path[path.Count-2].cordData);
     }
 }

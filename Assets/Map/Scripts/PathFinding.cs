@@ -60,11 +60,12 @@ public class PathFinding : MonoBehaviour
             if (currentNode.cordData == TargetPos)
             {
                 isRunning = false; // dont move here moving:
-                currentNode.traversable = false;// important so that two player units dont stand on eachother:
+                currentNode.traversable = false;// important so that two player units don't stand on each other:
             }
         }
     }
     
+    // code to check all nearest Neighbours:
     void ExploreNeighbors()
     {
         List<GridStats> neighbors = new List<GridStats>();
@@ -90,6 +91,7 @@ public class PathFinding : MonoBehaviour
         }
     }
     
+    //  Queue Data is reversed and Stored in Path:
     List<GridStats> BuildPath()
     {
         List<GridStats> path = new List<GridStats>();
@@ -109,6 +111,7 @@ public class PathFinding : MonoBehaviour
         return path;
     }
 
+    // Whenever a tile is clicked or a new PLayer changes position this code is executed to find a new Location to move to:
     public void SetNewTarget(Vector2Int startCoordinates, Vector2Int targetCoordinates)
     {
         startPos = startCoordinates;

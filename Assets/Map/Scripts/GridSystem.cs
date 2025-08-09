@@ -3,11 +3,18 @@ using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
+/// <summary>
+///  This a Grid System Here All the Grid generation and grid status control data is present:
+/// </summary>
 public class GridSystem : MonoBehaviour
 {
     [SerializeField] public Vector2Int gridSize;
     
     public GridStateData gridState;
+
+    public Material GirdMaterial;
+    
+    
     
     
     [SerializeField] int unitGridSize;
@@ -20,16 +27,6 @@ public class GridSystem : MonoBehaviour
     {
         CreateGrid();
     }
-    
-    public GridStats GridCoords(Vector2Int coordinates)
-    {
-        if (Grid.ContainsKey(coordinates))
-        {
-            return Grid[coordinates];
-        }
-
-        return null;
-    }
 
     public void BlockGrid(Vector2Int coordinates)
     {
@@ -40,14 +37,14 @@ public class GridSystem : MonoBehaviour
         }
     }
 
-    public void UnBlockGrid(Vector2Int coordinates)
-    {
-        if (Grid.ContainsKey(coordinates))
-        {
-            // Debug.Log($"Unblocking grid {coordinates}");
-            Grid[coordinates].traversable = true;
-        }
-    }
+    // public void UnBlockGrid(Vector2Int coordinates)
+    // {
+    //     if (Grid.ContainsKey(coordinates))
+    //     {
+    //         // Debug.Log($"Unblocking grid {coordinates}");
+    //         Grid[coordinates].traversable = true;
+    //     }
+    // }
 
     public void ResetGrid()
     {
@@ -91,6 +88,9 @@ public class GridSystem : MonoBehaviour
                 // grid.Add(cords, new GridStats(cords, !gridstates[x,y]));
                 Grid.Add(cords, new GridStats(cords, true));
 
+                // ------------------- Below Code can be used to create a Tile map:
+                // Tiles in this game are not physics related so they are just visual placeholders actual code and functionality is in the Grid above ->
+                
                 // GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
                 // Vector3 position = new Vector3(cords.x * unitGridSize, 0f, cords.y * unitGridSize);
                 // cube.transform.position = position;

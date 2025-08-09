@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3001472a6fdae524a824abec79b23271, type: 3}
   m_Name: GridStateData
   m_EditorClassIdentifier: 
+  PlayerPos: {x: 0, y: 2}

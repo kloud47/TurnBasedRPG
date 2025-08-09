@@ -31,8 +31,7 @@ public class PlayerController : MonoBehaviour
         //     Debug.Log(data.Key.ToString());
         // }
         gridSystem.gridState.PlayerPos =
-            new Vector2Int(0, 0) /
-            gridSystem.GetGridSize;
+            new Vector2Int((int)transform.position.x, (int)transform.position.z) / gridSystem.GetGridSize;
         SetCords(selectedUnitTransform);
     }
     
