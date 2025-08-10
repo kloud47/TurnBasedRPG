@@ -102,6 +102,7 @@ public class ObstacleWindow : EditorWindow
             {
                 // This is the main code for the Obstacle generate Functionality:
                 gridState.grid[coord].traversable = !states[row, col];
+                
                 EditorUtility.SetDirty(gridState); // Mark as changed
             }
             

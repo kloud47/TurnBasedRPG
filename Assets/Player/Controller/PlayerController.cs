@@ -54,19 +54,21 @@ public class PlayerController : MonoBehaviour
             if(hasHit)
             {
                 // Check for hits -> Tile or Unit:
-                if(hit.transform.tag == "Tile")
+                var gridInfo = hit.transform.GetComponent<GridInfo>();
+                if(gridInfo)
                 {
                     Debug.Log("Hit happened Tile");
                     if(unitSelected)
                     {
-                        Vector2Int targetCords = hit.transform.GetComponent<Tile>().cords;
+                        Vector2Int targetCords = gridInfo.cords;
                         // Divide coordinates by GirdSize to get the correct Coordinate:
                         Vector2Int startCords = new Vector2Int((int) selectedUnitTransform.position.x, (int) selectedUnitTransform.position.z) / gridSystem.GetGridSize;
+                        gridInfo.SetAsDestination(true);
                         PathFinder.SetNewTarget(startCords, targetCords);// This gets the coordinates to the destination which can then be used to perform the running animation:
                         RecalculatePath(true);
                     }
                 }
-                if(hit.transform.tag == "Unit")
+                if(hit.transform.CompareTag("Unit"))
                 {
                     Debug.Log("Hit happened Unit");
                     selectedUnitTransform = hit.transform;
@@ -135,6 +137,17 @@ public class PlayerController : MonoBehaviour
         gridSystem.gridState.PlayerPos =
             new Vector2Int((int)selectedUnitTransform.position.x, (int)selectedUnitTransform.position.z) /
             gridSystem.GetGridSize;
+        // Raycast down to find GridInfo component and call SetAsDestination(false)
+        // Start raycast from above the unit to handle cases where unit might be inside the tile
+        var raycastStart = selectedUnitTransform.position + Vector3.up * 2f;
+        if (Physics.Raycast(raycastStart, Vector3.down, out var hit, Mathf.Infinity))
+        {
+            var gridInfo = hit.collider.GetComponent<GridInfo>();
+            if (gridInfo)
+            {
+                gridInfo.SetAsDestination(false);
+            }
+        }
         inputEnabled = true;
     }
     

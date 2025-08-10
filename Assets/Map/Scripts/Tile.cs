@@ -50,10 +50,12 @@ public class Tile : MonoBehaviour
             
             // Set Red Color:
             // Get or create the red material
-            if (redMaterial == null)
+            if (!redMaterial)
             {
-                redMaterial = new Material(Shader.Find("Universal Render Pipeline/Lit"));
-                redMaterial.color = Color.red;
+                redMaterial = new Material(Shader.Find("Universal Render Pipeline/Lit"))
+                {
+                    color = Color.red
+                };
             }
             Renderer renderer = sphereIndicator.GetComponent<Renderer>();
             renderer.material = redMaterial;

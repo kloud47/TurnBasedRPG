@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2386961815632763759
 RectTransform:
   m_ObjectHideFlags: 0
@@ -245,7 +245,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7552f8c453050d843b2ec3232bd303d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  label: {fileID: 5046738393950538585}
   cords: {x: 0, y: 0}
+  meshRenderer: {fileID: 8412246631927086742}
+  selectedMaterial: {fileID: 2100000, guid: f3a542634a3d8c344a8d08ec5704d13c, type: 2}
+  highlightMaterial: {fileID: 2100000, guid: 8fbfe8d6be0a1dd4bb1a3f3a99a0f58a, type: 2}
 --- !u!114 &-5398228265177330684
 MonoBehaviour:
   m_ObjectHideFlags: 0
